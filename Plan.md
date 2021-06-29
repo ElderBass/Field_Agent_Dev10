@@ -1,7 +1,7 @@
 # Field Agent Assessment
 
 ## Overview
-### High Level Requirments:
+### High Level Requirements:
 * Create full HTTP CRUD for security clearance.
 * Create full HTTP CRUD for agent aliases.
 * Implement global error handling.
@@ -90,6 +90,12 @@
   ####
   **Estimated Time** = 2 hours
 
+#### TODO: Create AliasMapper class
+* Should be pretty straightforward, just follow examples of other mappers to make this work
+  ####
+  **Estimated Time** = 15 minutes
+
+
 #### TODO: Creating AliasJdbcTemplateRepository
 * First create interface that AliasJdbcTemplateRepository will implement
 * Need to write CRUD methods for the following operations:
@@ -128,7 +134,7 @@
 * Hopefully I have the hang of this from doing the SecurityClearance tests so it won't take as long
   ####
   **Estimated Time** = 1.5 hours
-#### Total Time for this Step = 11.5 hours
+#### Total Time for this Step = 11.75 hours
 
 
 ### 3. Global Error Handling
