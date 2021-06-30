@@ -16,7 +16,6 @@ import java.sql.Statement;
 import java.util.List;
 
 @Repository
-@Profile("jdbc-template-repo")
 public class AgentJdbcTemplateRepository implements AgentRepository {
 
     private final JdbcTemplate jdbcTemplate;

@@ -6,7 +6,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@Profile("jdbc-template-repo")
 public class AgencyAgentJdbcTemplateRepository implements AgencyAgentRepository {
 
     private final JdbcTemplate jdbcTemplate;

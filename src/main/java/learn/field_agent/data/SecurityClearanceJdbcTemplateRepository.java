@@ -13,7 +13,6 @@ import java.sql.Statement;
 import java.util.List;
 
 @Repository
-@Profile("jdbc-template-repo")
 public class SecurityClearanceJdbcTemplateRepository implements SecurityClearanceRepository {
 
     private final JdbcTemplate jdbcTemplate;

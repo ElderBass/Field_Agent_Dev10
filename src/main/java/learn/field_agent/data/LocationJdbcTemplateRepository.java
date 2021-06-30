@@ -12,7 +12,6 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 
 @Repository
-@Profile("jdbc-template-repo")
 public class LocationJdbcTemplateRepository implements LocationRepository {
 
     private final JdbcTemplate jdbcTemplate;
