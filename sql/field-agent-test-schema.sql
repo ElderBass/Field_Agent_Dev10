@@ -136,8 +136,8 @@ begin
 		('Ulises','B','Muhammad','2008-04-01',80),
 		('Phylys','Y','Howitt','1979-03-28',68);
 
-    insert into security_clearance values (security_clearance_id, name)
-        (1, 'Secret'), (2, 'Top Secret');
+    insert into security_clearance (security_clearance_id, name)
+        values (1, 'Secret'), (2, 'Top Secret');
         
 	insert into agency_agent 
 		(agency_id, agent_id, identifier, security_clearance_id, activation_date)

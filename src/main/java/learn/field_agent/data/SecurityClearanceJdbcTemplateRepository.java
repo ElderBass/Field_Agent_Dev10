@@ -2,6 +2,7 @@ package learn.field_agent.data;
 
 import learn.field_agent.data.mappers.SecurityClearanceMapper;
 import learn.field_agent.models.SecurityClearance;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -12,6 +13,7 @@ import java.sql.Statement;
 import java.util.List;
 
 @Repository
+@Profile("jdbc-template-repo")
 public class SecurityClearanceJdbcTemplateRepository implements SecurityClearanceRepository {
 
     private final JdbcTemplate jdbcTemplate;

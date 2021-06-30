@@ -2,6 +2,7 @@ package learn.field_agent.data;
 
 import learn.field_agent.data.mappers.LocationMapper;
 import learn.field_agent.models.Location;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -11,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 
 @Repository
+@Profile("jdbc-template-repo")
 public class LocationJdbcTemplateRepository implements LocationRepository {
 
     private final JdbcTemplate jdbcTemplate;

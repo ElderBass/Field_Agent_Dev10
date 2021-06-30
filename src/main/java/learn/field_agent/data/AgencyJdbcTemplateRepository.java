@@ -4,6 +4,7 @@ import learn.field_agent.data.mappers.AgencyAgentMapper;
 import learn.field_agent.data.mappers.AgencyMapper;
 import learn.field_agent.data.mappers.LocationMapper;
 import learn.field_agent.models.Agency;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -15,6 +16,7 @@ import java.sql.Statement;
 import java.util.List;
 
 @Repository
+@Profile("jdbc-template-repo")
 public class AgencyJdbcTemplateRepository implements AgencyRepository {
 
     private final JdbcTemplate jdbcTemplate;

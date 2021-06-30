@@ -1,10 +1,12 @@
 package learn.field_agent.data;
 
 import learn.field_agent.models.AgencyAgent;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@Profile("jdbc-template-repo")
 public class AgencyAgentJdbcTemplateRepository implements AgencyAgentRepository {
 
     private final JdbcTemplate jdbcTemplate;
