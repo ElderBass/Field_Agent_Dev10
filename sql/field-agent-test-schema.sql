@@ -136,7 +136,7 @@ begin
 		('Ulises','B','Muhammad','2008-04-01',80),
 		('Phylys','Y','Howitt','1979-03-28',68);
 
-    insert into security_clearance (security_clearance_id, name)
+    insert into security_clearance (security_clearance_id, `name`)
         values (1, 'Secret'), (2, 'Top Secret');
         
 	insert into agency_agent 
@@ -155,5 +155,3 @@ begin
 end //
 -- 4. Change the statement terminator back to the original.
 delimiter ;
-
--- data
