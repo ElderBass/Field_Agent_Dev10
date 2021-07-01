@@ -37,8 +37,8 @@ public class SecurityClearanceService {
         if (!result.isSuccess()) {
             return result;
         }
-        if (sc.getSecurityClearanceId() != 0) {
-            result.addMessage("securityClearanceId cannot be set for `add` operation", ResultType.INVALID);
+        if (sc.getSecurityClearanceId() <= 0) {
+            result.addMessage("securityClearanceId should be set for `update` operation", ResultType.INVALID);
             return result;
         }
 
