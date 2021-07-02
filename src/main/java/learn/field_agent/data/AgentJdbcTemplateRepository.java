@@ -45,6 +45,7 @@ public class AgentJdbcTemplateRepository implements AgentRepository {
 
         if (agent != null) {
             addAgencies(agent);
+            addAliases(agent);
         }
 
         return agent;
@@ -123,6 +124,7 @@ public class AgentJdbcTemplateRepository implements AgentRepository {
                 "where agent.agent_id = ?;";
 
         var aliases = jdbcTemplate.query(sql, new AliasMapper(), agent.getAgentId());
+        agent.setAliases(aliases);
 
     }
 }
