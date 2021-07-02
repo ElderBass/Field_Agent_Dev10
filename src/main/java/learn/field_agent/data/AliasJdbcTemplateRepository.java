@@ -32,7 +32,7 @@ public class AliasJdbcTemplateRepository implements AliasRepository {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, alias.getName());
             ps.setString(2, alias.getPersona());
-            ps.setInt(3, alias.getAgent().getAgentId());
+            ps.setInt(3, alias.getAgentId());
             return ps;
         }, keyHolder);
 
@@ -52,7 +52,7 @@ public class AliasJdbcTemplateRepository implements AliasRepository {
                 + "agent_id = ? "
                 + "where agency_id = ?;";
 
-        return jdbcTemplate.update(sql, alias.getName(), alias.getPersona(), alias.getAgent().getAgentId()) > 0;
+        return jdbcTemplate.update(sql, alias.getName(), alias.getPersona(), alias.getAgentId()) > 0;
     }
 
     @Override

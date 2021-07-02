@@ -44,6 +44,9 @@ class AgentJdbcTemplateRepositoryTest {
         assertEquals(1, hazel.getAgentId());
         assertEquals("Hazel", hazel.getFirstName());
         assertEquals(2, hazel.getAgencies().size());
+
+        // NEW STUFF ALERT
+        assertEquals(2, hazel.getAliases().size());
     }
 
     @Test
