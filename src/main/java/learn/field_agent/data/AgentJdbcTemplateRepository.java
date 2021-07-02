@@ -125,6 +125,5 @@ public class AgentJdbcTemplateRepository implements AgentRepository {
 
         var aliases = jdbcTemplate.query(sql, new AliasMapper(), agent.getAgentId());
         agent.setAliases(aliases);
-
     }
 }
