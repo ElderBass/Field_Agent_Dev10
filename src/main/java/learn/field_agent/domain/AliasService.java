@@ -61,7 +61,7 @@ public class AliasService {
             return result;
         }
 
-        if (alias.getName() == null) {
+        if (Validations.isNullOrBlank(alias.getName())) {
             result.addMessage("Alias name cannot be null.", ResultType.INVALID);
         }
 
