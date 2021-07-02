@@ -38,12 +38,12 @@ public class SecurityClearanceService {
             return result;
         }
         if (sc.getSecurityClearanceId() <= 0) {
-            result.addMessage("securityClearanceId should be set for `update` operation", ResultType.INVALID);
+            result.addMessage("Security Clearance ID should be set for `update` operation", ResultType.INVALID);
             return result;
         }
 
         if (!repository.update(sc)) {
-            String msg = String.format("securityClearanceId: %s, not found", sc.getSecurityClearanceId());
+            String msg = String.format("Security Clearance ID: %s, not found", sc.getSecurityClearanceId());
             result.addMessage(msg, ResultType.NOT_FOUND);
         }
 
