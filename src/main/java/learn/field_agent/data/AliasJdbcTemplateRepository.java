@@ -50,9 +50,9 @@ public class AliasJdbcTemplateRepository implements AliasRepository {
                 + "`name` = ?, "
                 + "persona = ?, "
                 + "agent_id = ? "
-                + "where agency_id = ?;";
+                + "where alias_id = ?;";
 
-        return jdbcTemplate.update(sql, alias.getName(), alias.getPersona(), alias.getAgentId()) > 0;
+        return jdbcTemplate.update(sql, alias.getName(), alias.getPersona(), alias.getAgentId(), alias.getAliasId()) > 0;
     }
 
     @Override

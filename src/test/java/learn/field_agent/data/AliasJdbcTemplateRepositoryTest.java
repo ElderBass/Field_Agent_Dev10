@@ -1,6 +1,8 @@
 package learn.field_agent.data;
 
+import learn.field_agent.models.Alias;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -9,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 class AliasJdbcTemplateRepositoryTest {
 
+    private final int NEXT_ID = 5;
 
     @Autowired
     AliasJdbcTemplateRepository repository;
@@ -21,5 +24,51 @@ class AliasJdbcTemplateRepositoryTest {
         knownGoodState.set();
     }
 
+    @Test
+    void shouldAdd() {
+       Alias alias = makeAlias();
 
+        Alias result = repository.add(alias);
+
+        assertEquals(NEXT_ID, result.getAliasId());
+    }
+
+    @Test
+    void shouldAddNullPersona() {
+        Alias alias = makeAlias();
+        alias.setPersona(null);
+        Alias result = repository.add(alias);
+
+        assertEquals(NEXT_ID + 1, result.getAliasId());
+    }
+
+    @Test
+    void shouldUpdate() {
+        Alias alias = makeAlias();
+        alias.setAliasId(2);
+
+        assertTrue(repository.update(alias));
+    }
+
+    @Test
+    void shouldNotUpdateNonexistent() {
+        Alias alias = makeAlias();
+        alias.setAliasId(2000);
+
+        assertFalse(repository.update(alias));
+    }
+
+    @Test
+    void shouldDelete() {
+        assertTrue(repository.deleteById(1));
+        assertFalse(repository.deleteById(1));
+    }
+
+    private Alias makeAlias() {
+        Alias alias = new Alias();
+        alias.setName("[Inconspicuous Name]");
+        alias.setPersona("Totally just a regular person. Not suspicious at all.");
+        alias.setAgentId(1);
+        return alias;
+    }
 }

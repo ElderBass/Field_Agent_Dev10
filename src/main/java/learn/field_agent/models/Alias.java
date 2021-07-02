@@ -32,9 +32,7 @@ public class Alias {
         this.name = name;
     }
 
-    public String getPersona() {
-        return persona;
-    }
+    public String getPersona() { return persona; }
 
     public void setPersona(String persona) {
         this.persona = persona;
