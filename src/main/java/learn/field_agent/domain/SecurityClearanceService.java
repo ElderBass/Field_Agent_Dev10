@@ -58,7 +58,7 @@ public class SecurityClearanceService {
         } else if (message.equals("Could not find Security Clearance with ID " + scId)){
             result.addMessage(message, ResultType.NOT_FOUND);
         } else {
-            result.addMessage(message, ResultType.INTERNAL_SERVER);
+            result.addMessage(message, ResultType.INVALID);
         }
         return result;
     }
