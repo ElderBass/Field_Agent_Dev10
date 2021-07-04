@@ -68,6 +68,13 @@ public class SecurityClearanceService {
         if (sc.getName() == null || sc.getName().trim().length() == 0) {
             result.addMessage("Name is required", ResultType.INVALID);
         }
+
+        List<SecurityClearance> all = findAll();
+        for (SecurityClearance sec : all) {
+            if (sec.getName().equals(sc.getName())) {
+                result.addMessage("Security Clearance name already in use.", ResultType.INVALID);
+            }
+        }
         return result;
     }
 }

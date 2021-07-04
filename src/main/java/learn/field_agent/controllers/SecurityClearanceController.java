@@ -3,6 +3,7 @@ package learn.field_agent.controllers;
 import learn.field_agent.domain.Result;
 import learn.field_agent.domain.SecurityClearanceService;
 import learn.field_agent.models.Agent;
+import learn.field_agent.models.Location;
 import learn.field_agent.models.SecurityClearance;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,8 +26,12 @@ public class SecurityClearanceController {
     }
 
     @GetMapping("/{scId}")
-    public SecurityClearance findById(@PathVariable int scId) {
-        return service.findById(scId);
+    public ResponseEntity<SecurityClearance> findById(@PathVariable int scId) {
+        SecurityClearance sc = service.findById(scId);
+        if (sc == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(sc);
     }
 
     @PostMapping
