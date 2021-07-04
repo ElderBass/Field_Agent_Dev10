@@ -50,8 +50,17 @@ public class SecurityClearanceService {
         return result;
     }
 
-    public boolean deleteById(int scId) {
-        return repository.deleteById(scId);
+    public Result<SecurityClearance> deleteById(int scId) {
+        String message =  repository.deleteById(scId);
+        Result<SecurityClearance> result = new Result();
+        if (message.equals("Deleted Successfully.")) {
+            return result;
+        } else if (message.equals("Could not find Security Clearance with ID " + scId)){
+            result.addMessage(message, ResultType.NOT_FOUND);
+        } else {
+            result.addMessage(message, ResultType.INTERNAL_SERVER);
+        }
+        return result;
     }
 
     // VALIDATION METHODS
@@ -71,7 +80,7 @@ public class SecurityClearanceService {
 
         List<SecurityClearance> all = findAll();
         for (SecurityClearance sec : all) {
-            if (sec.getName().equals(sc.getName())) {
+            if (sec.getName().equals(sc.getName()) && sec.getSecurityClearanceId() != sc.getSecurityClearanceId()) {
                 result.addMessage("Security Clearance name already in use.", ResultType.INVALID);
             }
         }

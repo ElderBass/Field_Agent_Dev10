@@ -76,12 +76,16 @@ public class SecurityClearanceJdbcTemplateRepository implements SecurityClearanc
 
     @Override
     @Transactional
-    public boolean deleteById(int scId) {
-        if (isSecurityClearanceInUse(scId)) {
+    public String deleteById(int scId) {
+        if (!isSecurityClearanceInUse(scId)) {
             final String sql = "delete from security_clearance where security_clearance_id = ?;";
-            return jdbcTemplate.update(sql, scId) > 0;
+            if (jdbcTemplate.update(sql, scId) > 0) {
+                return "Deleted Successfully.";
+            } else {
+                return "Could not find Security Clearance with ID " + scId;
+            }
         } else {
-            return false;
+            return "Security Clearance " + scId + " in active use - cannot delete at this time.";
         }
     }
 
@@ -103,9 +107,9 @@ public class SecurityClearanceJdbcTemplateRepository implements SecurityClearanc
                 .stream()
                 .findFirst().orElse(null);
         if (agencyAgent == null) {
-            return true;
-        } else {
             return false;
+        } else {
+            return true;
         }
     }
 }

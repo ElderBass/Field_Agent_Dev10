@@ -9,5 +9,5 @@ public interface SecurityClearanceRepository {
     List<SecurityClearance> findAll();
     SecurityClearance add(SecurityClearance sc);
     boolean update(SecurityClearance sc);
-    boolean deleteById(int scId);
+    String deleteById(int scId);
 }

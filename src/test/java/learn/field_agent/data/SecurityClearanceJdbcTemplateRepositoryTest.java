@@ -85,26 +85,26 @@ class SecurityClearanceJdbcTemplateRepositoryTest {
         assertFalse(repository.update(sc));
     }
 
-    // TODO this is where this gets tricky - need to run a check to see if this SecurityClearance is already in use
-
     @Test
     void shouldDelete() {
-        SecurityClearance sc = new SecurityClearance(3, "Sort of Secret");
+        SecurityClearance sc = new SecurityClearance(0, "Sort of Secret");
         SecurityClearance added = repository.add(sc);
 
-        assertEquals(3, repository.findAll().size());
+        assertEquals(4, repository.findAll().size());
 
-        boolean isDeleted = repository.deleteById(3);
-        assertTrue(isDeleted);
+        String isDeleted = repository.deleteById(4);
+        assertEquals("Deleted Successfully.", isDeleted);
     }
 
     @Test
     void shouldNotDeleteMissing() {
-        assertFalse(repository.deleteById(2000));
+        String result = repository.deleteById(2000);
+        assertEquals("Could not find Security Clearance with ID 2000", result);
     }
 
     @Test
     void shouldNotDeleteClearanceInUse() {
-        assertFalse(repository.deleteById(1));
+        String result = repository.deleteById(1);
+        assertEquals("Security Clearance 1 in active use - cannot delete at this time.", result);
     }
 }
