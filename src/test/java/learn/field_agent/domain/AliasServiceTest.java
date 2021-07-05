@@ -41,6 +41,12 @@ class AliasServiceTest {
     }
 
     @Test
+    void shouldNotAddDuplicateWithNullPersona() {
+        Alias alias = new Alias(1, "Arianna Martell", null, 1);
+
+    }
+
+    @Test
     void shouldAdd() {
         Alias alias = makeAlias();
 

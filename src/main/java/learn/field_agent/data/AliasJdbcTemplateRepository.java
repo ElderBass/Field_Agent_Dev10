@@ -1,5 +1,6 @@
 package learn.field_agent.data;
 
+import learn.field_agent.data.mappers.AliasMapper;
 import learn.field_agent.models.Alias;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.List;
 
 @Repository
 public class AliasJdbcTemplateRepository implements AliasRepository {
@@ -19,6 +21,12 @@ public class AliasJdbcTemplateRepository implements AliasRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    @Override
+    public List<Alias> findAll() {
+        final String sql = "select `name`, persona, agent_id from alias;";
+
+        return jdbcTemplate.query(sql, new AliasMapper());
+    }
 
     @Override
     public Alias add(Alias alias) {

@@ -5,6 +5,8 @@ import learn.field_agent.data.AliasRepository;
 import learn.field_agent.models.Alias;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AliasService {
 
@@ -13,6 +15,10 @@ public class AliasService {
     public AliasService(AliasRepository repository) {
         this.repository = repository;
     }
+
+    // TODO add a findAll here and finish with that duplicate valdiation
+
+    public List<Alias> findAll() { return repository.findAll(); }
 
     public Result<Alias> add(Alias alias) {
         Result<Alias> result = validate(alias);
@@ -65,11 +71,23 @@ public class AliasService {
             result.addMessage("Alias name cannot be null.", ResultType.INVALID);
         }
 
+        result = validateDuplicate(alias, result);
+
         String agentIdStr = "" + alias.getAgentId();
         if (agentIdStr.length() == 0) {
             result.addMessage("Alias must have an Agent ID.", ResultType.INVALID);
         }
 
+        return result;
+    }
+
+    private Result<Alias> validateDuplicate(Alias alias, Result result) {
+        List<Alias> all = findAll();
+        for (Alias a : all) {
+            if (a.getName().equals(alias.getName()) && (Validations.isNullOrBlank(alias.getName()))) {
+                result.addMessage("Persona required for duplicate alias names.", ResultType.INVALID);
+            }
+        }
         return result;
     }
 }
