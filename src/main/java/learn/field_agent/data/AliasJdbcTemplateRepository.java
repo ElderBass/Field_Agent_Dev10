@@ -23,7 +23,7 @@ public class AliasJdbcTemplateRepository implements AliasRepository {
 
     @Override
     public List<Alias> findAll() {
-        final String sql = "select `name`, persona, agent_id from alias;";
+        final String sql = "select alias_id, `name`, persona, agent_id from alias;";
 
         return jdbcTemplate.query(sql, new AliasMapper());
     }

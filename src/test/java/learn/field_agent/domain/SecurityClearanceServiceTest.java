@@ -17,8 +17,6 @@ class SecurityClearanceServiceTest {
     @MockBean
     SecurityClearanceRepository repository;
 
-    // 3. The mock PetRepository is injected into PetService
-    // and PetService is injected into PetServiceTest.
     @Autowired
     SecurityClearanceService service;
 
@@ -32,7 +30,6 @@ class SecurityClearanceServiceTest {
 
         Result<SecurityClearance> result = service.add(scIn);
 
-        // Assert
         assertEquals(ResultType.SUCCESS, result.getType());
         assertEquals(scOut, result.getPayload());
     }

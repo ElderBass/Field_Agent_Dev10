@@ -16,8 +16,6 @@ public class AliasService {
         this.repository = repository;
     }
 
-    // TODO add a findAll here and finish with that duplicate valdiation
-
     public List<Alias> findAll() { return repository.findAll(); }
 
     public Result<Alias> add(Alias alias) {
@@ -82,9 +80,9 @@ public class AliasService {
     }
 
     private Result<Alias> validateDuplicate(Alias alias, Result result) {
-        List<Alias> all = findAll();
+        List<Alias> all = repository.findAll();
         for (Alias a : all) {
-            if (a.getName().equals(alias.getName()) && (Validations.isNullOrBlank(alias.getName()))) {
+            if (a.getName().equals(alias.getName()) && (Validations.isNullOrBlank(alias.getPersona()))) {
                 result.addMessage("Persona required for duplicate alias names.", ResultType.INVALID);
             }
         }

@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
@@ -19,6 +22,26 @@ class AliasServiceTest {
 
     @MockBean
     AliasRepository repository;
+
+    @Test
+    void shouldFindAll() {
+
+        List<Alias> all = new ArrayList<>();
+        Alias arianna = new Alias(1, "Arianna Martell", "Willful, proud but not overtly arrogant, delicate but strong.", 1);
+        Alias tissa = new Alias(2, "Tissa de Vries", "Perfectionist, meticulous, curt but elegant in all things, sharply intelligent.", 1);
+        Alias rob = new Alias(3,"Rob Stark", "Composed, strategic and calculated but falls prey to emotions at times, honorable and capable.", 2);
+        Alias triss = new Alias(4, "Triss Merigold", "Youthful, spunky, capricious, determined, competent but can get in over her head.", 3);
+        all.add(arianna);
+        all.add(tissa);
+        all.add(rob);
+        all.add(triss);
+
+        when(repository.findAll()).thenReturn(all);
+
+        all = service.findAll();
+
+        assertEquals(4, all.size());
+    }
 
     @Test
     void shouldNotAddInvalid() {
@@ -40,18 +63,40 @@ class AliasServiceTest {
         assertFalse(result.isSuccess());
     }
 
+    // TODO so when I make HTTP requests to add a duplicate name with null persona, I get the proper 400 error
+    // but this test will not for the life of me conduct findAll in the validateDuplicate method, so this fails every time
+
     @Test
     void shouldNotAddDuplicateWithNullPersona() {
-        Alias alias = new Alias(1, "Arianna Martell", null, 1);
+        Alias aliasIn = new Alias(0, "Arianna Martell", null, 4);
+        Alias aliasOut = new Alias(5, "Arianna Martell", null, 4);
 
+        when(repository.add(aliasIn)).thenReturn(aliasOut);
+
+        Result result = service.add(aliasIn);
+        assertEquals(ResultType.INVALID, result.getType());
+    }
+
+    @Test
+    void shouldAddDuplicateNameWithDifferentPersona() {
+        Alias alias = new Alias(0, "Arianna Martell", "A princess from House Martell of Dorne.", 5);
+        Result result = service.add(alias);
+
+        assertTrue(result.isSuccess());
     }
 
     @Test
     void shouldAdd() {
-        Alias alias = makeAlias();
+        Alias aliasIn = makeAlias();
+        aliasIn.setAliasId(0);
+        Alias aliasOut = makeAlias();
+        aliasOut.setAliasId(4);
 
-        Result<Alias> result = service.add(alias);
-        assertTrue(result.isSuccess());
+        when(repository.add(aliasIn)).thenReturn(aliasOut);
+
+        Result<Alias> result = service.add(aliasIn);
+        assertEquals(ResultType.SUCCESS, result.getType());
+        assertEquals(aliasOut, result.getPayload());
     }
 
     @Test
@@ -61,7 +106,7 @@ class AliasServiceTest {
         assertEquals(ResultType.INVALID, actual.getType());
 
         alias = makeAlias();
-        alias.setAliasId(1);
+        alias.setAliasId(4);
         alias.setName("");
         actual = service.update(alias);
         assertEquals(ResultType.INVALID, actual.getType());
@@ -70,7 +115,7 @@ class AliasServiceTest {
     @Test
     void shouldUpdate() {
         Alias alias = makeAlias();
-        alias.setAliasId(1);
+        alias.setAliasId(4);
 
         when(repository.update(alias)).thenReturn(true);
 
@@ -79,11 +124,7 @@ class AliasServiceTest {
     }
 
     private Alias makeAlias() {
-        Alias alias = new Alias();
-        alias.setName("[Inconspicuous Name]");
-        alias.setPersona("Totally just a regular person. Not suspicious at all.");
-        alias.setAgentId(1);
-        return alias;
+        return new Alias(0, "Don't Worry About It", "Totally Not Suspicious.", 5);
     }
 
 }

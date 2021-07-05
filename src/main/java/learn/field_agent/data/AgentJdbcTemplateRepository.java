@@ -123,8 +123,8 @@ public class AgentJdbcTemplateRepository implements AgentRepository {
     private void addAliases(Agent agent) {
         final String sql = "select alias.alias_id, alias.name, alias.persona, alias.agent_id " +
                 "from alias " +
-                "inner join agent on agent.agent_id = alias.agent_id " +
-                "where agent.agent_id = ?;";
+                "join agent on agent.agent_id = alias.agent_id " +
+                "where alias.agent_id = ?;";
 
         var aliases = jdbcTemplate.query(sql, new AliasMapper(), agent.getAgentId());
         agent.setAliases(aliases);
