@@ -1,0 +1,98 @@
+###
+# Find all (not required but I did it anyway LoL)
+
+GET /api/alias HTTP/1.1
+Host: localhost:8080
+
+###
+# Cannot add without a name
+
+POST /api/alias HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "name": "  ",
+  "persona": "A princess of Dorne.",
+  "agentId": 2
+}
+
+###
+# Cannot insert duplicate name without a persona
+
+POST /api/alias HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "name": "Arianna Martell",
+  "persona": null,
+  "agentId": 2
+}
+
+###
+# Successful post with duplicate name and different persona
+
+POST /api/alias HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "name": "Arianna Martell",
+  "persona": "A princess of Dorne.",
+  "agentId": 2
+}
+
+###
+# Cannot update with empty name
+
+PUT /api/alias/5 HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "aliasId": 5,
+  "name": "  ",
+  "persona": "A princess of Dorne, House Martell",
+  "agentId": 2
+}
+
+###
+# Absurd update request
+
+PUT /api/alias/500 HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "aliasId": 500,
+  "name": "Secret Agent Man",
+  "persona": "You know the song...",
+  "agentId": 2
+}
+
+###
+# Successful udpate
+
+PUT /api/alias/5 HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "aliasId": 5,
+  "name": "Arianna Martell",
+  "persona": "A princess of Dorne, House Martell",
+  "agentId": 2
+}
+
+###
+# Successful Deletion
+
+DELETE /api/alias/5 HTTP/1.1
+Host: localhost:8080
+
+###
+# Absurd deletion request
+
+DELETE /api/alias/200 HTTP/1.1
+Host: localhost:8080

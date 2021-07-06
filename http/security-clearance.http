@@ -1,0 +1,105 @@
+###
+# Find all
+
+GET /api/security_clearance HTTP/1.1
+Host: localhost:8080
+
+###
+# Find by ID = Secret
+
+GET /api/security_clearance/1 HTTP/1.1
+Host: localhost:8080
+
+###
+# Absurd get request
+
+GET /api/security_clearance/100 HTTP/1.1
+Host: localhost:8080
+
+###
+# Successful POST
+
+POST /api/security_clearance HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "name": "Pop Secret"
+}
+
+
+###
+# Duplicate name
+
+POST /api/security_clearance HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "name": "Top Secret"
+}
+
+###
+# Empty name
+
+POST /api/security_clearance HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "name": "  "
+}
+
+###
+# Sucessful update
+
+PUT /api/security_clearance/3 HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "securityClearanceId": 3,
+  "name": "Victoria's Secret"
+}
+
+###
+# Empty name
+
+PUT /api/security_clearance/3 HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "securityClearanceId": 3,
+  "name": "  "
+}
+
+###
+# Duplicate name
+
+PUT /api/security_clearance/3 HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "securityClearanceId": 3,
+  "name": "Top Secret"
+}
+
+###
+# Security Clearance in use
+
+DELETE /api/security_clearance/1 HTTP/1.1
+Host: localhost:8080
+
+###
+# Absurd delete request
+
+DELETE /api/security_clearance/1 HTTP/1.1
+Host: localhost:8080
+
+###
+# Successful deletion
+
+DELETE /api/security_clearance/2 HTTP/1.1
+Host: localhost:8080
