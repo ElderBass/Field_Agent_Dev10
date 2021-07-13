@@ -65,6 +65,7 @@ class AliasServiceTest {
 
     // TODO so when I make HTTP requests to add a duplicate name with null persona, I get the proper 400 error
     // but this test will not for the life of me conduct findAll in the validateDuplicate method, so this fails every time
+    // I've debugged this many times but it just skips findAll every time for seemingly no reason
 
     @Test
     void shouldNotAddDuplicateWithNullPersona() {

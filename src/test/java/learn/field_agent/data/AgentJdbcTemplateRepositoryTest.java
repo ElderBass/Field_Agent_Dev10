@@ -46,8 +46,18 @@ class AgentJdbcTemplateRepositoryTest {
         assertEquals(2, hazel.getAgencies().size());
 
         // NEW STUFF ALERT
+        // This fails when I run all tests in project, saying Hazel has 0 aliases despite me never deleting those
+        // aliases anywhere in the project, but when I run all tests in this file it passes. I've debugged this
+        // several times but am failing to see why it won't retrieve the aliases.
+        // It will always return them when I run the API request as well. At a total loss.
         assertEquals(2, hazel.getAliases().size());
     }
+//
+//    @Test
+//    void shouldFindHazelAliases() {
+//        Agent hazel = repository.findById(1);
+//        assertEquals(2, hazel.getAliases().size());
+//    }
 
     @Test
     void shouldAdd() {

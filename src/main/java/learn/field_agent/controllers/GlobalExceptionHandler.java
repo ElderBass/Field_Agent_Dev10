@@ -3,6 +3,7 @@ package learn.field_agent.controllers;
 import learn.field_agent.domain.Result;
 import learn.field_agent.domain.ResultType;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -10,6 +11,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public <T> ResponseEntity<ErrorResponse> handleException(DataIntegrityViolationException ex) {
+        Result result = new Result();
+        result.addMessage("Something went wrong accessing our database. Apologies.", ResultType.INTERNAL_SERVER);
+        return ErrorResponse.build(result);
+    }
 
     @ExceptionHandler(DataAccessException.class)
     public <T> ResponseEntity<ErrorResponse> handleException(DataAccessException ex) {
