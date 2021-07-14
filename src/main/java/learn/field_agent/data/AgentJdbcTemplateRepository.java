@@ -2,7 +2,9 @@ package learn.field_agent.data;
 
 import learn.field_agent.data.mappers.AgentAgencyMapper;
 import learn.field_agent.data.mappers.AgentMapper;
+import learn.field_agent.data.mappers.AliasMapper;
 import learn.field_agent.models.Agent;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -43,6 +45,7 @@ public class AgentJdbcTemplateRepository implements AgentRepository {
 
         if (agent != null) {
             addAgencies(agent);
+            addAliases(agent); // did the same for aliases as was done for agencies
         }
 
         return agent;
@@ -97,6 +100,8 @@ public class AgentJdbcTemplateRepository implements AgentRepository {
     @Transactional
     public boolean deleteById(int agentId) {
         jdbcTemplate.update("delete from agency_agent where agent_id = ?;", agentId);
+        // NEW STUFF ALERT
+        jdbcTemplate.update("delete from alias where agent_id = ?;", agentId);
         return jdbcTemplate.update("delete from agent where agent_id = ?;", agentId) > 0;
     }
 
@@ -112,5 +117,16 @@ public class AgentJdbcTemplateRepository implements AgentRepository {
 
         var agentAgencies = jdbcTemplate.query(sql, new AgentAgencyMapper(), agent.getAgentId());
         agent.setAgencies(agentAgencies);
+    }
+
+    // NEW STUFF ALERT
+    private void addAliases(Agent agent) {
+        final String sql = "select alias.alias_id, alias.name, alias.persona, alias.agent_id " +
+                "from alias " +
+                "join agent on agent.agent_id = alias.agent_id " +
+                "where alias.agent_id = ?;";
+
+        var aliases = jdbcTemplate.query(sql, new AliasMapper(), agent.getAgentId());
+        agent.setAliases(aliases);
     }
 }

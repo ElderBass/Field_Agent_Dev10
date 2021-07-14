@@ -102,11 +102,15 @@ begin
 
 	delete from location;
     alter table location auto_increment = 1;
+    delete from alias;
+    alter table alias auto_increment = 1;
     delete from agency_agent;
 	delete from agency;
 	alter table agency auto_increment = 1;
     delete from agent;
     alter table agent auto_increment = 1;
+    delete from security_clearance;
+    alter table security_clearance auto_increment = 1;
     
     insert into agency(agency_id, short_name, long_name) values
         (1, 'ACME', 'Agency to Classify & Monitor Evildoers'),
@@ -133,6 +137,18 @@ begin
 		('Urban','H','Carwithen',null,58),
 		('Ulises','B','Muhammad','2008-04-01',80),
 		('Phylys','Y','Howitt','1979-03-28',68);
+
+    insert into alias
+        (name, persona, agent_id)
+    values
+        ('Arianna Martell', 'Willful, proud but not overtly arrogant, delicate but strong.', 1),
+        ('Tissa de Vries', 'Perfectionist, meticulous, curt but elegant in all things, sharply intelligent.', 1),
+        ('Rob Stark', 'Composed, strategic and calculated but falls prey to emotions at times, honorable and capable.', 2),
+        ('Triss Merigold', 'Youthful, spunky, capricious, determined, competent but can get in over her head.', 3);
+
+
+    insert into security_clearance (security_clearance_id, `name`)
+        values (1, 'Secret'), (2, 'Top Secret');
         
 	insert into agency_agent 
 		(agency_id, agent_id, identifier, security_clearance_id, activation_date)
@@ -150,8 +166,3 @@ begin
 end //
 -- 4. Change the statement terminator back to the original.
 delimiter ;
-
--- data
-insert into security_clearance values
-	(1, 'Secret'),
-    (2, 'Top Secret');
