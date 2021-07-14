@@ -72,6 +72,9 @@ class AliasServiceTest {
         Alias aliasIn = new Alias(0, "Arianna Martell", null, 4);
         Alias aliasOut = new Alias(5, "Arianna Martell", null, 4);
 
+        when(repository.findAll()).thenReturn(List.of(
+                new Alias(1, "Arianna Martell", null, 1)
+        ));
         when(repository.add(aliasIn)).thenReturn(aliasOut);
 
         Result result = service.add(aliasIn);

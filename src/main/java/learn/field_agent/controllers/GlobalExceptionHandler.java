@@ -5,6 +5,8 @@ import learn.field_agent.domain.ResultType;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -33,16 +35,12 @@ public class GlobalExceptionHandler {
         return ErrorResponse.build(result);
     }
 
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<ErrorResponse> handleException(RuntimeException ex) {
-        Result result = new Result();
-        result.addMessage("Sorry but your request returned no results.", ResultType.NOT_FOUND);
-        return ErrorResponse.build(result);
-    }
-
-
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> handleException(Exception ex) {
+    public ResponseEntity<ErrorResponse> handleException(Exception ex) throws Exception {
+        if (ex instanceof HttpMessageNotReadableException || ex instanceof HttpMediaTypeNotSupportedException) {
+            throw ex; // return
+        }
+
         Result result = new Result();
         result.addMessage("Something went horribly, terribly wrong. That's on us. So sorry.", ResultType.INTERNAL_SERVER);
         return ErrorResponse.build(result);
